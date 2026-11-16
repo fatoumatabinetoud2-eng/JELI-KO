@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jëli ko – trouvez une agence avec du cash</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#0b1b33;--mut:#5b6b82;--line:#dde5f0;--brand:#0b2545;--onbrand:#fff;--accent:#2f6bff;--ok:#0f7b45;--low:#946000;--no:#b3261e;--okbg:#dff4e8;--lowbg:#fbefd2;--nobg:#fae0de;--grey:#e8edf4;--road:#e2e9f3;--mapbg:#eaf0fa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08111f;--card:#11213a;--ink:#eaf1fb;--mut:#9fb1c9;--line:#243a5c;--brand:#7ba4ff;--onbrand:#07142b;--accent:#7ba4ff;--ok:#5be0a0;--low:#f2bb45;--no:#ff8e86;--okbg:#12372a;--lowbg:#3a2f10;--nobg:#43211f;--grey:#1b2e4b;--road:#1a2f50;--mapbg:#0c1a30;}}
+:root[data-theme="dark"]{--bg:#08111f;--card:#11213a;--ink:#eaf1fb;--mut:#9fb1c9;--line:#243a5c;--brand:#7ba4ff;--onbrand:#07142b;--accent:#7ba4ff;--ok:#5be0a0;--low:#f2bb45;--no:#ff8e86;--okbg:#12372a;--lowbg:#3a2f10;--nobg:#43211f;--grey:#1b2e4b;--road:#1a2f50;--mapbg:#0c1a30;}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{font-size:17px;margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.4}
+main{max-width:520px;margin:0 auto;padding:16px 16px 40px}
+.hd{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:20px 18px;border-radius:26px;background:linear-gradient(135deg,#0b2545 0%,#1e4fd8 100%);color:#fff;box-shadow:0 8px 24px rgba(11,37,69,.25)}
+h1{font-size:2.1rem;font-weight:800;margin:0;letter-spacing:-.02em;color:#fff;line-height:1}
+.sub{margin:6px 0 0;color:rgba(255,255,255,.85);font-size:1rem}
+label{font-weight:600;font-size:1.05rem;display:block;margin-bottom:6px}
+.amt{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:6px 16px;box-shadow:0 2px 8px rgba(11,37,69,.08)}
+.amt:focus-within{border-color:var(--accent)}
+input.big,.amt input{flex:1;border:0;background:transparent;color:var(--ink);font:800 2rem 'Bricolage Grotesque',system-ui,sans-serif;padding:8px 0;min-width:0;outline:none}
+.amt span{color:var(--mut);font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:11px 18px;font:600 1rem inherit;font-family:inherit;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--onbrand);border-color:var(--brand)}
+button:focus-visible,input:focus-visible,select:focus-visible,[data-pin]:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.mode{display:flex;border:2px solid var(--line);border-radius:16px;overflow:hidden;margin-top:14px}
+.mode button{flex:1;border:0;background:var(--card);color:var(--ink);padding:13px;font:600 1.05rem inherit;font-family:inherit;cursor:pointer}
+.mode button[aria-pressed="true"]{background:var(--brand);color:var(--onbrand)}
+select{width:100%;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:600 1rem inherit;font-family:inherit;margin-bottom:14px}
+.pin{width:100%;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:8px 14px!important;letter-spacing:.4em;margin-bottom:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.time{display:flex;align-items:center;gap:8px;margin-top:14px}.time label{margin:0;white-space:nowrap}.time select{margin:0}
+#map{background:var(--mapbg);border:1px solid var(--line);border-radius:20px;box-shadow:0 4px 14px rgba(11,37,69,.1);margin-top:16px;padding:6px}
+#map svg{display:block;width:100%;height:auto}
+.ring{fill:none;stroke:var(--line);stroke-dasharray:4 4}.mt{fill:var(--mut);font-size:11px;font-family:inherit}
+[data-pin]{cursor:pointer}
+.legend{color:var(--mut);font-size:.9rem;margin:4px 6px 4px}
+.count{margin:18px 0 10px;color:var(--ink);font-weight:800;font-size:1.1rem}
+.ag{background:var(--card);border:2px solid transparent;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(11,37,69,.1)}
+.ag.sel{border-color:var(--accent)}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.name{font-weight:800;font-size:1.2rem}
+.meta{color:var(--mut);font-size:.95rem;margin-top:2px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 4px 0 8px}
+.dist{font-weight:800;white-space:nowrap;color:var(--accent);font-size:1.1rem}
+.badge{display:inline-block;margin-top:12px;padding:6px 12px;border-radius:10px;font-weight:700;font-size:.98rem}
+.ok{background:var(--okbg);color:var(--ok)}.low{background:var(--lowbg);color:var(--low)}.no{background:var(--nobg);color:var(--no)}.cl{background:var(--grey);color:var(--mut)}
+.acts{display:flex;gap:8px;margin-top:12px}
+.acts button,.full{border-radius:14px;padding:14px;font:700 1rem inherit;font-family:inherit;cursor:pointer;border:2px solid var(--brand)}
+.acts button{flex:1}
+.go{background:var(--brand);color:var(--onbrand);box-shadow:0 3px 8px rgba(11,37,69,.25)}.rep{background:transparent;color:var(--brand)}
+.full{width:100%;margin-top:8px;padding:14px;font-weight:800;font-size:1rem}
+.empty{text-align:center;padding:30px 10px;color:var(--mut)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:var(--onbrand);padding:10px 16px;border-radius:10px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;text-align:center}
+.toast.on{opacity:1}
+.lang{margin-left:auto;flex-shrink:0;display:flex;border:2px solid var(--line);border-radius:12px;overflow:hidden}.lang button{border:0;background:var(--card);color:var(--ink);padding:9px 12px;font:700 .9rem inherit;font-family:inherit;cursor:pointer}.lang button[aria-pressed="true"]{background:var(--brand);color:var(--onbrand)}
+.srch{width:100%;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:600 1rem inherit;font-family:inherit}
+.rate{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}.star{font-weight:800;color:var(--accent)}
+.rate button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:4px 7px;font:600 .8rem inherit;font-family:inherit;cursor:pointer}
+#ops{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}#ops .chip{white-space:nowrap}
+.hd .lang{border-color:rgba(255,255,255,.45)}.hd .lang button{background:transparent;color:#fff}.hd .lang button[aria-pressed="true"]{background:#fff;color:#0b2545}
+.road{stroke:var(--road);stroke-width:8;fill:none;stroke-linecap:round}
+.lnk{border:0;background:none;color:var(--accent);font:700 inherit;font-family:inherit;text-decoration:underline;cursor:pointer;padding:0}
+.info{margin-top:8px}.acts .rep{flex:0 0 auto;border:0;background:none;color:var(--mut);text-decoration:underline;font-weight:600;font-size:.9rem;padding:14px 6px}
+input.big.pin{width:100%;border:2px solid var(--line);background:var(--card);border-radius:14px;font-size:1.6rem;text-align:center;letter-spacing:.5em;box-shadow:0 2px 8px rgba(11,37,69,.08)}
+input.big.pin:focus{border-color:var(--accent)}
+#agence{padding-bottom:45vh}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <div class="hd">
+    <svg width="54" height="54" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="12" fill="#fff"/><path d="M20 6c-5.5 0-10 4.3-10 9.7C10 23 20 34 20 34s10-11 10-18.3C30 10.3 25.5 6 20 6z" fill="#2f6bff"/><circle cx="20" cy="16" r="4" fill="#fff"/></svg>
+    <div><h1>Jëli ko</h1><p class="sub" data-i="tag">Une agence ouverte, avec assez de cash.</p></div>
+    <div class="lang" role="group" aria-label="Langue"><button id="lg-fr" aria-pressed="true">FR</button><button id="lg-wo" aria-pressed="false">WO</button></div>
+  </div>
+
+  <div class="mode" id="tabs" role="group" aria-label="Espace" style="margin:0 0 16px"><button id="t-user" aria-pressed="true" data-i="tu">Utilisateur</button><button id="t-ag" aria-pressed="false" data-i="ta">Espace agence</button></div>
+
+  <div id="user">
+    <label for="amt" data-i="amt">Montant</label>
+    <div class="amt"><input id="amt" type="text" inputmode="numeric" value="100 000"><span>F CFA</span></div>
+    <div class="mode" role="group" aria-label="Type d'opération">
+      <button id="m-retrait" aria-pressed="true" data-i="ret">Je retire</button>
+      <button id="m-depot" aria-pressed="false" data-i="dep">Je dépose</button>
+    </div>
+    <div class="row" id="ops" role="group" aria-label="Opérateur"></div>
+    <input id="q" class="srch" type="search" data-ip="ph" placeholder="Rechercher un nom ou un quartier" aria-label="Rechercher">
+    <div class="time"><label for="hh">Heure (démo)</label>
+      <select id="hh"><option value="auto">Maintenant</option><option value="10">10 h</option><option value="22">22 h</option></select></div>
+    <div id="map"></div>
+    <div class="legend"><span style="color:var(--ok)">●</span> adaptée · <span style="color:var(--low)">●</span> cash limité · <span style="color:var(--no)">●</span> plus de cash · <span style="color:var(--mut)">●</span> fermée. Carte schématique, positions fictives.</div>
+    <div class="count" id="count"></div>
+    <div id="list"></div>
+  </div>
+
+  <div id="agence" hidden></div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+var ops=["Wave","Orange Money","Free Money"],col={"Wave":"#1ba7e8","Orange Money":"#ff7900","Free Money":"#cd0067"};
+var A=[
+ {n:"Boutique Fatou Diop",q:"Médina",d:.3,g:20,o:8,c:21,cash:{"Wave":350000,"Orange Money":120000},t:"il y a 8 min"},
+ {n:"Multiservices Modou",q:"Colobane",d:.6,g:110,o:7,c:22,cash:{"Wave":40000,"Orange Money":200000,"Free Money":60000},t:"il y a 25 min"},
+ {n:"Tabac Chez Ibou",q:"Fass",d:.8,g:250,o:9,c:19,cash:{"Wave":0,"Orange Money":0},t:"il y a 12 min"},
+ {n:"Cyber Aminata",q:"HLM",d:1.2,g:160,o:8,c:20,cash:{"Wave":500000,"Free Money":300000},t:"il y a 3 h",old:true},
+ {n:"Kiosque Ndiaye & Fils",q:"Grand Dakar",d:1.5,g:300,o:6,c:23,cash:{"Orange Money":90000,"Wave":150000},t:"il y a 40 min"},
+ {n:"Agence Sow Services",q:"Sicap Liberté",d:1.9,g:60,o:8,c:18,cash:{"Wave":800000,"Orange Money":450000,"Free Money":200000},t:"il y a 5 min"}
+];
+var RT=[[4.5,18],[4.1,9],[3.2,14],[4.7,22],[3.9,7],[4.4,31]];A.forEach(function(a,i){a.r=RT[i][0];a.nr=RT[i][1]});
+var FEE={"Wave":1,"Orange Money":1.5,"Free Money":1.5};
+var T={fr:{tag:"Une agence ouverte, avec assez de cash.",amt:"Montant",ret:"Je retire",dep:"Je dépose",tu:"Utilisateur",ta:"Espace agence",go:"Y aller",ph:"Rechercher un nom ou un quartier",cl:"Fermée · ouvre à "},
+wo:{tag:"Ajans bu ubbi te am xaalis bu doy.",amt:"Xaalis bi",ret:"Dama bëgg a génne xaalis",dep:"Dama bëgg a dugal xaalis",tu:"Jëfandikukat",ta:"Ajans bi",go:"Dem",ph:"Seet tur wala dëkk bi",cl:"Tëj · ubbi ci "}};
+function norm(x){return x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+var S={ro:null,q:"",lang:"fr",op:null,mode:"retrait",amt:100000,hour:"auto",agent:null,sel:null};
+var $=function(i){return document.getElementById(i)};
+function fmt(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")}
+function num(v){return parseInt(String(v).replace(/\D/g,""),10)||0}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(function(){t.classList.remove("on")},2400)}
+function hr(){if(S.hour!=="auto")return +S.hour;var d=new Date();return d.getHours()+d.getMinutes()/60}
+
+function status(a,h){
+  if(h<a.o||h>=a.c)return{k:"cl",l:T[S.lang].cl+a.o+" h",s:0};
+  var o=S.op?[S.op]:Object.keys(a.cash),best=0;
+  o.forEach(function(k){if((a.cash[k]||0)>best)best=a.cash[k]});
+  var open=" · ouverte jusqu'à "+a.c+" h";
+  if(S.mode==="depot")return{k:"ok",l:"Accepte les dépôts"+open,s:3};
+  if(best>=S.amt)return{k:"ok",l:"Peut payer "+fmt(S.amt)+" F"+open,s:3};
+  if(best>0)return{k:"low",l:"Cash limité : jusqu'à "+fmt(best)+" F",s:2};
+  return{k:"no",l:"Plus de cash signalé",s:1};
+}
+
+function drawMap(rows){
+  var s='<svg viewBox="0 0 320 240" role="img" aria-label="Carte schématique des agences autour de vous"><path class="road" d="M0 150L320 90"/><path class="road" d="M110 0L200 240"/><path class="road" d="M0 40L320 200"/><circle class="ring" cx="160" cy="120" r="50"/><circle class="ring" cx="160" cy="120" r="100"/><text class="mt" x="164" y="66">1 km</text><text class="mt" x="164" y="16">2 km</text><circle cx="160" cy="120" r="16" fill="var(--accent)" opacity=".2"/><circle cx="160" cy="120" r="8" fill="var(--accent)" stroke="#fff" stroke-width="3"/><text class="mt" x="160" y="140" text-anchor="middle">Vous</text>';
+  rows.forEach(function(r){
+    var a=r.a,rad=a.d*50,x=160+rad*Math.sin(a.g*Math.PI/180),y=120-rad*Math.cos(a.g*Math.PI/180);
+    var f=r.st.s===0?"var(--mut)":r.st.k==="ok"?"var(--ok)":r.st.k==="low"?"var(--low)":"var(--no)";
+    s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(S.sel===r.i?15:12)+'" fill="'+f+'" stroke="var(--card)" stroke-width="3" data-pin="'+r.i+'" tabindex="0" role="button" aria-label="'+r.a.n+'"/>';
+  });
+  $("map").innerHTML=s+'</svg>';
+}
+
+function fees(a){if(S.mode!=="retrait"||!S.amt)return"";var o=(S.op?[S.op]:Object.keys(a.cash)).filter(function(k){return (a.cash[k]||0)>=S.amt});if(!o.length)return"";return '<div class="meta" style="margin-top:6px">Frais estimés : '+o.map(function(k){return k+' ≈ '+fmt(Math.round(S.amt*FEE[k]/100))+' F'}).join(' · ')+' <em>(indicatif)</em></div>'}
+function stars(a,i){var s='<div class="meta info"><span class="star">★ '+a.r.toFixed(1).replace(".",",")+'</span> ('+a.nr+') · '+a.t+(a.old?' · ancienne':'')+' · <button class="lnk" data-ro="'+i+'">Noter</button></div>';if(S.ro===i){s+='<div class="rate">';for(var n=1;n<=5;n++)s+='<button data-rate="'+i+'-'+n+'" aria-label="'+n+' étoiles">'+n+'★</button>';s+='</div>'}return s}
+function render(){
+  var h=hr();
+  var rows=A.map(function(a,i){return{a:a,i:i,st:status(a,h)}}).filter(function(r){return !S.op||(S.op in r.a.cash)}).filter(function(r){return !S.q||norm(r.a.n+" "+r.a.q).indexOf(norm(S.q))>-1});
+  rows.sort(function(x,y){return (y.st.s-x.st.s)||(x.a.d-y.a.d)});
+  var good=rows.filter(function(r){return r.st.s===3}).length;
+  $("count").textContent=good+" agence"+(good>1?"s":"")+" adaptée"+(good>1?"s":"")+" sur "+rows.length;
+  drawMap(rows);
+  if(!rows.length){$("list").innerHTML='<div class="empty">Aucune agence pour cet opérateur.</div>';return}
+  $("list").innerHTML=rows.map(function(r){
+    var a=r.a,tags=Object.keys(a.cash).map(function(k){return '<i class="dot" style="background:'+col[k]+'"></i>'+k}).join("");
+    return '<div class="ag'+(S.sel===r.i?' sel':'')+'" id="c'+r.i+'"><div class="top"><div><div class="name">'+a.n+'</div><div class="meta">'+a.q+tags+'</div></div><div class="dist">'+String(a.d).replace(".",",")+' km</div></div>'
+    +'<span class="badge '+r.st.k+'">'+r.st.l+'</span>'+fees(a)+stars(a,r.i)
+    +'<div class="acts"><button class="go" data-go="'+r.i+'">'+T[S.lang].go+'</button><button class="rep" data-rep="'+r.i+'">Plus de cash ? Signaler</button></div></div>';
+  }).join("");
+}
+
+function setOps(){
+  var h='<button class="chip" aria-pressed="'+(S.op===null)+'" data-op="">Tous</button>';
+  ops.forEach(function(o){h+='<button class="chip" aria-pressed="'+(S.op===o)+'" data-op="'+o+'">'+o+'</button>'});
+  $("ops").innerHTML=h;
+}
+
+function opt(list){return list.map(function(x){return '<option value="'+x[0]+'">'+x[1]+'</option>'}).join("")}
+function drawAgent(){
+  var el=$("agence");
+  if(S.agent===null){
+    el.innerHTML='<label for="l-ag">Votre agence</label><select id="l-ag">'+opt(A.map(function(a,i){return[i,a.n]}))+'</select>'
+    +'<label for="l-pin">Code à 4 chiffres</label><input id="l-pin" class="pin big" type="password" inputmode="numeric" maxlength="4" autocomplete="off" enterkeyhint="go">'
+    +'<button class="go full" id="l-go">Se connecter</button><p class="meta">Démo : le code est 1234. En production, le serveur vérifiera la connexion.</p>';
+  }else{
+    var a=A[S.agent];
+    el.innerHTML='<p>Connecté : <b>'+a.n+'</b> · '+a.q+'</p>'
+    +'<label for="f-op">Opérateur</label><select id="f-op">'+opt(ops.map(function(o){return[o,o]}))+'</select>'
+    +'<label for="f-amt">Cash disponible</label><div class="amt"><input id="f-amt" type="text" inputmode="numeric" placeholder="0"><span>F CFA</span></div>'
+    +'<button class="go full" id="f-save">Mettre à jour le cash</button>'
+    +'<div class="two" style="margin-top:18px"><div><label for="f-o">Ouvre à (h)</label><select id="f-o">'+hoursOpt(a.o)+'</select></div><div><label for="f-c">Ferme à (h)</label><select id="f-c">'+hoursOpt(a.c)+'</select></div></div>'
+    +'<button class="rep full" id="f-hrs">Enregistrer les horaires</button>'
+    +'<button class="rep full" id="f-out">Se déconnecter</button>'
+    +'<p class="meta">Les utilisateurs voient vos changements tout de suite.</p>';
+  }
+}
+function hoursOpt(sel){var s="";for(var i=5;i<=24;i++)s+='<option value="'+i+'"'+(i===sel?' selected':'')+'>'+i+' h</option>';return s}
+function tab(w){["user","agence"].forEach(function(x){$(x).hidden=true});var m={user:"user",ag:"agence"};$(m[w]).hidden=false;["user","ag"].forEach(function(k){$("t-"+k).setAttribute("aria-pressed",k===w)});if(w==="user")render();if(w==="ag")drawAgent()}
+
+$("t-user").onclick=function(){tab("user")};
+$("t-ag").onclick=function(){tab("ag")};
+$("hh").onchange=function(e){S.hour=e.target.value;render()};
+$("ops").addEventListener("click",function(e){var b=e.target.closest("[data-op]");if(!b)return;S.op=b.dataset.op||null;setOps();render()});
+$("amt").addEventListener("input",function(e){S.amt=num(e.target.value);e.target.value=S.amt?fmt(S.amt):"";render()});
+["retrait","depot"].forEach(function(m){$("m-"+m).addEventListener("click",function(){S.mode=m;$("m-retrait").setAttribute("aria-pressed",m==="retrait");$("m-depot").setAttribute("aria-pressed",m==="depot");render()})});
+
+function pick(i){S.sel=+i;render();var c=$("c"+i);if(c)c.scrollIntoView({block:"nearest",behavior:"smooth"})}
+$("map").addEventListener("click",function(e){var p=e.target.closest("[data-pin]");if(p)pick(p.dataset.pin)});
+$("map").addEventListener("keydown",function(e){var p=e.target.closest("[data-pin]");if(p&&(e.key==="Enter"||e.key===" ")){e.preventDefault();pick(p.dataset.pin)}});
+$("list").addEventListener("click",function(e){
+  var g=e.target.closest("[data-go]"),r=e.target.closest("[data-rep]");
+  if(g)toast("Itinéraire vers "+A[g.dataset.go].n+" (bientôt)");
+  var ro=e.target.closest("[data-ro]");if(ro){S.ro=S.ro===+ro.dataset.ro?null:+ro.dataset.ro;render()}
+  var rt=e.target.closest("[data-rate]");
+  if(rt){var pr=rt.dataset.rate.split("-"),ra=A[pr[0]],n=+pr[1];ra.r=(ra.r*ra.nr+n)/(ra.nr+1);ra.nr++;S.ro=null;toast("Merci pour votre note : "+n+" ★");render()}
+  if(r){var a=A[r.dataset.rep];Object.keys(a.cash).forEach(function(k){if(!S.op||k===S.op)a.cash[k]=0});a.t="à l'instant";a.old=false;toast("Merci ! Signalement enregistré.");render()}
+});
+
+function doLogin(){if($("l-pin").value==="1234"){S.agent=+$("l-ag").value;drawAgent();toast("Connecté")}else{toast("Code incorrect. Essayez 1234.");$("l-pin").value=""}}
+$("agence").addEventListener("input",function(e){if(e.target.id==="f-amt"){var v=num(e.target.value);e.target.value=v?fmt(v):""}if(e.target.id==="l-pin"&&e.target.value.length===4)doLogin()});
+$("agence").addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="l-pin")doLogin()});
+$("agence").addEventListener("click",function(e){
+  var id=e.target.id,a=S.agent===null?null:A[S.agent];
+  if(id==="l-go")doLogin();
+  if(id==="f-save"){var v=num($("f-amt").value);a.cash[$("f-op").value]=v;a.t="à l'instant";a.old=false;toast("Cash mis à jour : "+fmt(v)+" F")}
+  if(id==="f-hrs"){var o=+$("f-o").value,c=+$("f-c").value;if(c<=o){toast("L'heure de fermeture doit suivre l'ouverture.");return}a.o=o;a.c=c;toast("Horaires enregistrés : "+o+" h – "+c+" h")}
+  if(id==="f-out"){S.agent=null;drawAgent()}
+});
+$("q").addEventListener("input",function(e){S.q=e.target.value;render()});
+function applyLang(){var t=T[S.lang];document.documentElement.lang=S.lang==="wo"?"wo":"fr";
+  document.querySelectorAll("[data-i]").forEach(function(el){el.textContent=t[el.dataset.i]});
+  document.querySelectorAll("[data-ip]").forEach(function(el){el.placeholder=t[el.dataset.ip]});
+  $("lg-fr").setAttribute("aria-pressed",S.lang==="fr");$("lg-wo").setAttribute("aria-pressed",S.lang==="wo");render()}
+$("lg-fr").onclick=function(){S.lang="fr";applyLang()};
+$("lg-wo").onclick=function(){S.lang="wo";applyLang()};
+setOps();applyLang();
+</script>
+</body>
+</html>
